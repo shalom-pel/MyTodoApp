@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/holo_purple">
+
+    <TextView
+        android:id="@+id/textSplash"
+        android:layout_width="230dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="270dp"
+        android:layout_marginStart="40dp"
+        android:text="Todo App"
+        android:textStyle="bold"
+        android:textColor="@android:color/white"
+        android:textSize="50sp"
+
+        tools:ignore="HardcodedText" />
+
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="270dp"
+        android:layout_marginStart="280dp"
+        android:src="@drawable/ic_baseline_doneall"
+        android:contentDescription="@string/todo" />
+
+</RelativeLayout>
