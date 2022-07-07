@@ -14,19 +14,17 @@ import com.cognizant.android.mytodoapp.Model.TodoModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.database.*
 
-class MainActivity : AppCompatActivity(),UpdateAndDelete {
+abstract class MainActivity : AppCompatActivity(),UpdateAndDelete {
     lateinit var database: DatabaseReference
     var toDoList:MutableList<TodoModel>? = null
     lateinit var adapter: ToDoAdapter
     private var recyclerView : RecyclerView?=null
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         val fab = findViewById<View>(R.id.fab) as FloatingActionButton
-
         recyclerView = findViewById<RecyclerView>(R.id.todoRecyclerView)
 
             database = FirebaseDatabase.getInstance().reference
@@ -65,9 +63,7 @@ class MainActivity : AppCompatActivity(),UpdateAndDelete {
             override fun onDataChange(snapshot: DataSnapshot) {
                 toDoList!!.clear()
                 addItemToList(snapshot)
-
             }
-
         })
     }
 
@@ -85,6 +81,7 @@ class MainActivity : AppCompatActivity(),UpdateAndDelete {
                 val toDoItemData = TodoModel.createList()
                 val map = currentItem.getValue() as HashMap<String,Any>
 
+                toDoItemData.UID = currentItem.key
                 toDoItemData.done = map.get("done") as Boolean?
                 toDoItemData.itemDataText=map.get("itemDataText") as String?
                 toDoList!!.add(toDoItemData)
@@ -103,6 +100,7 @@ class MainActivity : AppCompatActivity(),UpdateAndDelete {
 
     override fun onItemDelete(itemUID: String) {
         val itemReference = database.child("todo").child(itemUID)
+        itemReference.removeValue()
         adapter.notifyDataSetChanged()
 
     }
