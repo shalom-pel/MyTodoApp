@@ -8,7 +8,6 @@ import android.widget.BaseAdapter
 import android.widget.CheckBox
 import android.widget.ImageButton
 import android.widget.TextView
-import androidx.recyclerview.widget.RecyclerView
 import com.cognizant.android.mytodoapp.Model.TodoModel
 
 
@@ -24,17 +23,17 @@ class ToDoAdapter(context: Context, toDoList: MutableList<TodoModel>) : BaseAdap
         val done: Boolean = itemList.get(p0).done as Boolean
 
         val view: View
-        val viewHolder: RecyclerView
+        val viewHolder: RecyclerViewHolder
 
         if (p1 == null) {
             view = inflater.inflate(R.layout.row_itemslayout, p2, false)
-            viewHolder = RecyclerView(view)
+            viewHolder = RecyclerViewHolder(view)
             view.tag = viewHolder
         } else {
             view = p1
-            viewHolder = view.tag as RecyclerView
+            viewHolder = view.tag as RecyclerViewHolder
         }
-        viewHolder.textView.text = itemTextData
+        viewHolder.textLabel.text = itemTextData
         viewHolder.isDone.isChecked = done
 
 
@@ -45,11 +44,12 @@ class ToDoAdapter(context: Context, toDoList: MutableList<TodoModel>) : BaseAdap
                 updateAndDelete.onItemDelete(UID)
             }
 
-            return@setOnClickListener view
-        }
-}
 
-    private class ListViewHolder(row: View?) {
+        }
+        return view
+    }
+
+    private class RecyclerViewHolder(row: View?) {
         val textLabel: TextView = row!!.findViewById(R.id.item_textView) as TextView
         val isDone: CheckBox = row!!.findViewById(R.id.checkbox) as CheckBox
         val isDeleted: ImageButton = row!!.findViewById(R.id.close) as ImageButton
