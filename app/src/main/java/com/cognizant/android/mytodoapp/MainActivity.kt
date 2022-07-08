@@ -9,6 +9,7 @@ import android.widget.ListView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cognizant.android.mytodoapp.Model.TodoModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -18,16 +19,16 @@ abstract class MainActivity : AppCompatActivity(),UpdateAndDelete {
     lateinit var database: DatabaseReference
     var toDoList:MutableList<TodoModel>? = null
     lateinit var adapter: ToDoAdapter
-    private var recyclerView : RecyclerView?=null
+    private var recyclerViewItem : RecyclerView?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         val fab = findViewById<View>(R.id.fab) as FloatingActionButton
-        recyclerView = findViewById<RecyclerView>(R.id.todoRecyclerView)
+        recyclerViewItem = findViewById<RecyclerView>(R.id.todoRecyclerView)
 
-            database = FirebaseDatabase.getInstance().reference
+        database = FirebaseDatabase.getInstance().reference
 
         fab.setOnClickListener { view ->
             val alertDialog = AlertDialog.Builder(this)
@@ -52,8 +53,8 @@ abstract class MainActivity : AppCompatActivity(),UpdateAndDelete {
         }
 
         toDoList = mutableListOf<TodoModel>()
-        adapter= ToDoAdapter(this, toDoList!!)
-        recyclerView!!.adapter//=adapter
+        adapter = ToDoAdapter(this, toDoList!!)
+        recyclerViewItem!!.adapter=adapter
         database.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(error: DatabaseError) {
                 Toast.makeText(applicationContext, "No item Added", Toast.LENGTH_LONG).show()
