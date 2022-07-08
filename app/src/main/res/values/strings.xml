@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">MyTodoApp</string>
     <string name="todo">TODO</string>
+    <string name="isDone"></string>
+    <string name="isDeleted"></string>
+
+
 </resources>
